@@ -4,7 +4,7 @@ $(document).ready(function () {
 
   var correctAnswers = 0;
   var wrongAnswers = 0;
-  var countdown = 300;
+  var countdown = 301;
   var intervalID;
   var clockRunning = false;
 
@@ -67,11 +67,8 @@ $(document).ready(function () {
   // loop through the array, and loop through the inner objects to append to the page
 
   for (var i = 0; i < questionBank.length; i++) {
-    console.log(questionBank[i])
     $("#question-text").append(`<h5>${questionBank[i].question}</h5>${questionBank[i].answers.join("<br>")}<br><br>`)
   }
-
-
 
   window.onload = function () {
     $("#play-game").on("click", begin);
@@ -81,12 +78,14 @@ $(document).ready(function () {
 
     if (!clockRunning) {
       clockRunning = true;
-      intervalId = setInterval(count, 300);
+      intervalID = setInterval(count, 301);
+      console.log(setInterval);
     };
 
     if (countdown === 0) {
-      $("#message").text("You Have Run Out of Time!")
-    }
+      $("#message").text("You Have Run Out of Time!");
+
+    };
   };
 
   function count() {
@@ -96,13 +95,10 @@ $(document).ready(function () {
 
     var timeConverted = timeConverter(countdown);
   
-    $("#timer").text(timeConverted);
-  
-    //  TODO: Get the current time, pass that into the timeConverter function, and save the result in a variable.
-    // input = 5 || output = 00:05
-    // input = 65 || output : 01:05
-  
+    $("#timer").text(timeConverted);  
   };
+
+  count();
 
   function timeConverter(t) {
 
@@ -128,16 +124,16 @@ $(document).ready(function () {
   function stop() {
 
     //  TODO: Use clearInterval to stop the count here and set the clock to not be running.
-    clearInterval(intervalId);
+    clearInterval(intervalID);
     clockRunning = false;
-
   };
+  stop();
 
   function reset() {
 
-    countdown = 30000;
+    countdown = 301;
 
-    $("#display").text("5:00");
+    
     $("#correct").text("");
     $("#wrong").text("");
   };

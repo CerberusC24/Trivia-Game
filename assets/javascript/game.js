@@ -70,31 +70,15 @@ $(document).ready(function () {
     $("#question-text").append(`<h5>${questionBank[i].question}</h5>${questionBank[i].answers.join("<br>")}<br><br>`)
   }
 
-  // 
 
-  window.onload = function () {
-    $("#play-game").on("click", begin);
-  };
+  $("#play-game").on("click", begin);
 
   function begin() {
-
     if (!clockRunning) {
-      clockRunning = true;
-      intervalID = setInterval(count, 1000);
-      console.log(intervalID);
+      isClockRunning = true;
+      clearInterval(intervalId);
+      intervalId = setInterval(decrement, 1000);
     };
-
-    if (countdown === 0) {
-      $("#message").text("You Have Run Out of Time!");
-
-    };
-  };
-
-  function stop() {
-
-    //  TODO: Use clearInterval to stop the count here and set the clock to not be running.
-    clearInterval(intervalID);
-    clockRunning = false;
   };
 
   function count() {

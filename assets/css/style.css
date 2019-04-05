@@ -1,0 +1,10 @@
+.bg-custom {
+  background-image: url(../images/trivia-night.jpg);
+  background-size: auto;
+  background-position: top right;
+  background-blend-mode: luminosity;
+}
+
+.custom-brand {
+  font-family: 'Germania One', cursive;
+}

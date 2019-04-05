@@ -5,6 +5,15 @@
   background-blend-mode: luminosity;
 }
 
+.body-bg {
+  background-image: url(../images/background.jpg);
+  position: bottom left;
+}
+
 .custom-brand {
   font-family: 'Germania One', cursive;
+}
+
+.width-custom {
+  width: 100%;
 }

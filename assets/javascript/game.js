@@ -4,7 +4,7 @@ $(document).ready(function () {
 
   var correctAnswers = 0;
   var wrongAnswers = 0;
-  var countdown = 301;
+  var countdown = 121;
   var intervalID;
   var clockRunning = false;
 
@@ -66,29 +66,41 @@ $(document).ready(function () {
 
   // loop through the array, and loop through the inner objects to append to the page
 
-  for (var i = 0; i < questionBank.length; i++) {
-    $("#question-text").append(`<h5>${questionBank[i].question}</h5>${questionBank[i].answers.join("<br>")}<br><br>`)
-  }
-
-
-  $("#play-game").on("click", begin);
+  window.onload = function () {
+    $("#play-game").on("click", begin);
+  };
 
   function begin() {
     if (!clockRunning) {
-      isClockRunning = true;
-      clearInterval(intervalId);
-      intervalId = setInterval(decrement, 1000);
+      clockRunning = true;
+      intervalID = setInterval(count, 1000);
+
+      for (var i = 0; i < questionBank.length; i++) {
+        $("#question-text").append(`<h5>${questionBank[i].question}</h5>${questionBank[i].answers.join("<br>")}<br><br>`);
+      }
+      
     };
   };
 
   function count() {
 
-    //  TODO: increment time by 1
     countdown--;
 
+    if (countdown === 0) {
+      clockRunning = false;
+      $("#message").text("You Have Run Out of Time!");
+      stop();
+    };
+
+    function stop() {
+      if (clockRunning === false) {
+        clearInterval(intervalID);
+      };
+    };
+
     var timeConverted = timeConverter(countdown);
-  
-    $("#timer").text(timeConverted);  
+
+    $("#timer").text(timeConverted);
   };
 
   count();
@@ -98,30 +110,24 @@ $(document).ready(function () {
     //  Takes the current time in seconds and convert it to minutes and seconds (mm:ss).
     var minutes = Math.floor(t / 60);
     var seconds = t - (minutes * 60);
-  
+
     if (seconds < 10) {
       seconds = "0" + seconds;
     }
-  
+
     if (minutes === 0) {
       minutes = "00";
-    }
-  
-    else if (minutes < 10) {
+    } else if (minutes < 10) {
       minutes = "0" + minutes;
     }
-  
+
     return minutes + ":" + seconds;
-  }
-
-  function reset() {
-
-    countdown = 301;
-
-    
-    $("#correct").text("");
-    $("#wrong").text("");
   };
+
+  function gameReset() {
+    countdown = 121;
+
+  }
 
 
 

@@ -4,7 +4,7 @@ $(document).ready(function () {
 
   var correct = 0;
   var wrong = 0;
-  var countdown = 121;
+  var countdown = 61;
   var intervalID;
   var clockRunning = false;
 
@@ -72,7 +72,7 @@ $(document).ready(function () {
       rightAnswer: "Q",
       userAnswer: "",
     },
-  ]
+  ];
 
   window.onload = function () {
     $("#play-game").on("click", begin);
@@ -90,7 +90,7 @@ $(document).ready(function () {
         $("#question-field").empty();
 
         $("#question-field").append(`<div>
-        <a class="btn btn-outline-danger my-2 my-sm-0" id="submit-answers" type="submit">Submit Answers</a>
+        <button class="btn btn-outline-danger my-2 my-sm-0" id="submit-answers" type="submit">Submit Answers</button>
       </div>`)
 
         // Loop through questions array
@@ -161,34 +161,49 @@ $(document).ready(function () {
 
         // get value out of radio button you selected
         var answer = $(this).val();
+        console.log(answer);
 
         // set answer to question's userAnswer property
         questionBank[questionIndex].userAnswer = answer;
+
       });
-     
+
+      // create a function to tie the evaluation of user answers to right answers and tie it to a submission button
+
+      $("#question-field").on("click", "#submit-answers", function () {
+        clearInterval(intervalID);
+
+        for (i = 0; i < questionBank.length; i++) {
+          if (questionBank[i].userAnswer === questionBank[i].rightAnswer) {
+            console.log(questionBank[i].rightAnswer);
+            correct++
+          } else {
+            wrong++
+          }
+
+          if(correct === wrong) {
+            $("#message").text("You have neither a good or poor grasp of trivial knowledge")
+          }
+
+          if (correct > wrong) {
+            $("#message").text("You're a trivial genius")
+          }
+          else if(wrong > correct) {
+            $("#message").text("You should read a book or something")
+          }
+        }
+
+        $("#correct").text(correct);
+        $("#wrong").text(wrong);
+
+      });
 
       renderQuestions();
     };
-
-    $("#question-field").on("click", "#submit-answers", function() {
-      clearInterval(intervalID);
-
-      for (i = 0; i < questionBank.length; i++) {
-        if(questionBank[i].answer === questionBank[i].userAnswer) {
-          correct++
-        }
-        else { wrong++
-        }
-      }
-
-      $("#correct").text(correct);
-      $("#wrong").text(wrong);
-      
-    });
-
-
   };
 
+
+  // create function for the game clock
   function count() {
 
     countdown--;
@@ -232,7 +247,7 @@ $(document).ready(function () {
   };
 
   function gameReset() {
-    countdown = 121;
+    countdown = 61;
     begin()
   }
 
